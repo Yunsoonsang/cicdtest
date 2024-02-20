@@ -1,28 +1,24 @@
-pipeline {
+pipleline {
   agent any
   stages {
     stage('git scm update') {
       steps {
-        git url: '', branch: ''
+        git url: 'https://github.com/Yunsoonsang/cicdtest.git', branch: 'main'
       }
     }
     stage('docker build and push') {
       steps {
         sh '''
-        docker build -t andrewyss/cicdtest:green .
-        docker push andrewyss/cicdtest:green
+        sudo docker build -t andrewyss/cicdtest:green .
+        sudo docker push andrewyss/cicdtest:green
         '''
       }
     }
-    stage('deploy kubernetes') {
-      steps {
-        sh '''
-        kubectl create deployment myweb --image=andrewyss/cicdtest:green
-        kubectl expose deployment myweb --type=LoadBalancer --port=80 --target-port=80 --name=svc_myweb
-        '''
-      }
+    stage('deploy k8s') {
+      sh '''
+      sudo kubectl create deploy myweb --image=andrewyss/cicdtest:green
+      sudo kubectl expose deploy myweb --type=LoadBalancer --port=80 --target-port=80
+      '''
     }
   }
 }
-
-  
