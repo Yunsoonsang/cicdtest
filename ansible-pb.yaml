@@ -1,0 +1,16 @@
+- name: deploy and services
+  hosts: master
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: git clone and pull
+      git:
+        repo: []
+        dest: /root/0220
+        clone: yes
+        update: yes
+        force: yes
+
+    - name: kubectl apply
+      shell: kubectl apply -f /root/0220/deploy.yaml
