@@ -6,7 +6,7 @@
   tasks:
     - name: git clone and pull
       git:
-        repo: []
+        repo: https://github.com/Yunsoonsang/cicdtest.git
         dest: /root/0220
         clone: yes
         update: yes
